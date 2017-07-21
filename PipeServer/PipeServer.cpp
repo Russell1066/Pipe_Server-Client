@@ -70,17 +70,20 @@ int main()
 
 	LPSTR pResponse = "This is a response";
 
-	while (shouldContinue)
+	for (int i=0;shouldContinue;++i)
 	{
 		ConnectNamedPipe(pipeHandle, nullptr);
 
 		auto bytes = ReadDataFromPipe(pipeHandle);
+
+		printf("%s (%d)\n", bytes, i);
 
 		free (bytes);
 
 		WriteDataToPipe(pipeHandle, pResponse, strlen(pResponse) + 1);
 
 		FlushFileBuffers(pipeHandle);
+		DisconnectNamedPipe(pipeHandle);
 	}
 
 	DisconnectNamedPipe(pipeHandle);
