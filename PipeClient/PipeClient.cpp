@@ -72,17 +72,25 @@ int main()
 
 	if (pipeHandle == INVALID_HANDLE_VALUE)
 	{
-		throw "Failed to connect to SystemConfigurator pipe...";
+		printf("no server found\nPress Enter to exit");
+		getchar();
+		return 0;
 	}
 
 	LPSTR pSend = "this is some send data";
 	WriteDataToPipe(pipeHandle, pSend, strlen(pSend) + 1);
 	auto bytes = ReadDataFromPipe(pipeHandle);
+
+	printf("%s\n", bytes);
+
 	free(bytes);
 
 	Sleep(2000);
 
 	CloseHandle(pipeHandle);
+
+	printf("Press Enter to exit");
+	getchar();
 
 	return 0;
 }
